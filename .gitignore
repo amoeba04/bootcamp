@@ -1,0 +1,11 @@
+#everything
+/*
+
+#except
+!/.gitignore
+!/README.md
+!/cyclegan.py
+!/dataset.py
+!/main.py
+!/utils.py
+!/CycleGAN.ipynb
