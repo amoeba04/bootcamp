@@ -1,10 +1,18 @@
 # 이미지 생성모델 파헤치기
 
-## 8/21(월) Theory
+## 8/21(월) ~ 8/23(수) Theory: Autoencoder, CycleGAN, Stable Diffusion
 
-## 8/22(화) Autoencoder (Training, Inference)
+## 8/24(목) Practice
+### Autoencoder (Training, Inference)
 
-## 8/23(수) CycleGAN (Training, Inference)
-Bootcamp 서버 기준 (A6000 1GPU) Training 7시간 예상
+### CycleGAN (Training, Inference)
+학습
+```
+CUDA_VISIBLE_DEVICES=0 python main.py --batch_size 4 --epochs 2 --lr 2e-4 --sample_interval 100 --data_path ./horse2zebra --output_dir ./experiments
+```
 
-## 8/24(목) Stable Diffusion (Inference)
+추론 (이미지 생성)
+```
+CUDA_VISIBLE_DEVICES=0 python main.py --batch_size 1 --eval
+```
+### Stable Diffusion (Inference)
