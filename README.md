@@ -16,3 +16,14 @@ CUDA_VISIBLE_DEVICES=0 python main.py --batch_size 4 --epochs 2 --lr 2e-4 --samp
 CUDA_VISIBLE_DEVICES=0 python main.py --batch_size 1 --eval
 ```
 ### Stable Diffusion (Inference)
+
+### Frechet Inception Distance (FID)
+Real Image 분포와 Fake Image 분포 간의 거리를 계산하여 Fake Image가 Real Image와 얼마나 가까운지 (얼마나 Real한지)에 대해 계산하는 metric
+
+분포 간의 거리 계산이기 때문에 1:1 매칭되는 Target Image가 필요하지 않음
+
+값이 작을수록 (0에 가까울수록) Fake Image가 Real Image와 비슷함
+
+```
+CUDA_VISIBLE_DEVICES=0 python fid_score.py /path/to/real/dataset /path/to/fake/dataset
+```
