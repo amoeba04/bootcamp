@@ -3,6 +3,7 @@
 - 일정: 
 
 8/21(월) ~ 8/23(수) Theory: Autoencoder, CycleGAN, Stable Diffusion
+
 8/24(목) Practice
 
 - 강의자료: 공지 메일 참고
@@ -29,7 +30,9 @@ CUDA_VISIBLE_DEVICES=0 python main.py --batch_size 4 --epochs 2 --lr 2e-4 --samp
 CUDA_VISIBLE_DEVICES=0 python main.py --batch_size 1 --eval --output_dir ./experiment_ori
 ```
 
-Download pre-trained weight: [Dropbox link](https://www.dropbox.com/scl/fi/4lbvos2n85clcye0qhx1l/checkpoint_latest.pth?rlkey=osbb73vc1phuv34wamixgfxby&dl=0)
+Download pre-trained weight:
+[Dropbox link](https://www.dropbox.com/scl/fi/5z3ouo4wqgqdmew121hx5/checkpoint_latest.pth?rlkey=lmj57wahde84gdgfec2m9m8ct&dl=0) / 
+[Google Drive link](https://drive.google.com/file/d/1e0ojGThhunYNNT7CKiAguU2W8ySk8Zs1/view?usp=sharing)
 ### Stable Diffusion (Inference)
 - 학습 및 추론: ```StableDiffusion/std_inference.ipynb``` 내 실행
 
