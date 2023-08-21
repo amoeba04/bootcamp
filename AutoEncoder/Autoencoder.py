@@ -17,7 +17,6 @@ from torchvision.datasets import MNIST
 
 import argparse
 parser = argparse.ArgumentParser('Autoencoder training and evaluation script')
-parser.add_argument('--num_workers', default=8, type=int)
 parser.add_argument('--batch_size', default=128, type=int)
 parser.add_argument('--epochs', default=2, type=int)
 parser.add_argument('--latent_dims', default=10, type=int, help='latent dimensions')
@@ -25,13 +24,16 @@ parser.add_argument('--lr', type=float, default=1e-3, metavar='LR',
                     help='learning rate (default: 1e-3)')
 parser.add_argument('--use_gpu', action='store_true', help='use GPU')
 parser.add_argument('--pretrained', action='store_true', help='use pretrained weights')
-
-
 args = parser.parse_args()
 
+def createFolder(directory):
+    try:
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+    except OSError:
+        print ('Error: Creating directory. ' +  directory)
 
 #################### Parameter Settings ####################
-num_workers = args.num_workers
 latent_dims = args.latent_dims
 num_epochs = args.epochs
 batch_size = args.batch_size
@@ -44,7 +46,6 @@ print("# latent_dims :", latent_dims)
 print("# num_epochs :", num_epochs)
 print("# batch_size :", batch_size)
 print("# learning_rate :", learning_rate)
-print("# num_workers :", num_workers)
 print("# use gpu :", use_gpu)
 print("# use pretrained :", pretrained)
 print("#########################")
@@ -56,10 +57,10 @@ img_transform = transforms.Compose([
 ])
 
 train_dataset = MNIST(root='./data/MNIST', download=True, train=True, transform=img_transform)
-train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=num_workers)
+train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=8)
 
 test_dataset = MNIST(root='./data/MNIST', download=True, train=False, transform=img_transform)
-test_dataloader = DataLoader(test_dataset, batch_size=batch_size, shuffle=True, num_workers=num_workers)
+test_dataloader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False, num_workers=8)
 
 #################### Autoencoder Definition ####################
 class Encoder(nn.Module):
@@ -112,15 +113,21 @@ autoencoder = autoencoder.to(device)
 num_params = sum(p.numel() for p in autoencoder.parameters() if p.requires_grad)
 print('Number of parameters: %d' % num_params)
 
+
 #################### Pretrained Weights ###################
+createFolder('results')
 if pretrained == True:
-    model_state_dict = torch.load("./my_autoencoder_100epoch.pth", map_location=device)
+    dir_path = './results/pretrained_results'
+    createFolder(dir_path)
+    model_state_dict = torch.load("./checkpoint/my_autoencoder_100epoch.pth", map_location=device)
     autoencoder.load_state_dict(model_state_dict)
 
-
+    
 #################### Train Autoencoder ####################
 
 elif pretrained == False:
+    dir_path = './results/{}epoch_results'.format(str(num_epochs))
+    createFolder(dir_path)
     optimizer = torch.optim.Adam(params=autoencoder.parameters(), lr=learning_rate, weight_decay=1e-5)
 
     # set to training mode
@@ -154,17 +161,21 @@ elif pretrained == False:
             num_batches += 1
             
         train_loss_avg[-1] /= num_batches
-        print('Epoch [%d / %d] average reconstruction error: %f' % (epoch, num_epochs, train_loss_avg[-1]))
+        print('Epoch [%d / %d] average reconstruction error: %f' % (epoch+1, num_epochs, train_loss_avg[-1]))
 
-    torch.save(autoencoder.state_dict(), './my_autoencoder_{}epoch.pth'.format(str(num_epochs+1)))
+    torch.save(autoencoder.state_dict(), './checkpoint/my_autoencoder_{}epoch.pth'.format(str(num_epochs+1)))
 #################### Plot Training Curve ####################
+
+
+
+
     plt.ion()
 
     fig = plt.figure()
     plt.plot(train_loss_avg)
     plt.xlabel('Epochs')
     plt.ylabel('Reconstruction error')
-    plt.savefig("./1.Plot Training Curve.png")
+    plt.savefig(dir_path + "/1.Plot Training Curve.png")
     plt.show()
 #################### Visualize Reconstructions ####################
 
@@ -197,7 +208,7 @@ def visualise_output(images, model):
         images = to_img(images)
         np_imagegrid = torchvision.utils.make_grid(images[1:50], 10, 5).numpy()
         plt.imshow(np.transpose(np_imagegrid, (1, 2, 0)))
-        plt.savefig("./3.Autoencoder reconstruction.png")
+        plt.savefig(dir_path + "/3.Autoencoder reconstruction.png")
         plt.show()
 
 images, labels = next(iter(test_dataloader))
@@ -205,7 +216,7 @@ images, labels = next(iter(test_dataloader))
 # First visualise the original images
 # Original images
 show_image(torchvision.utils.make_grid(images[1:50],10,5))
-plt.savefig("./2.Original images.png")
+plt.savefig(dir_path + "/2.Original images.png")
 plt.show()
 
 # Reconstruct and visualise the images using the autoencoder
@@ -260,7 +271,7 @@ for ind,l in enumerate(lambda_range):
    
     axs[ind].imshow(image[0,0,:,:], cmap='gray')
     axs[ind].set_title('lambda_val='+str(round(l,1)))
-plt.savefig("./4.Interpolate in Latent Space.png")
+plt.savefig(dir_path + "/4.Interpolate in Latent Space.png")
 plt.show()
 
 #################### Random Latent Vector (Autoencoder as Generator) ####################
@@ -286,7 +297,7 @@ with torch.no_grad():
 
     fig, ax = plt.subplots(figsize=(5, 5))
     show_image(torchvision.utils.make_grid(img_recon[:100],10,5))
-    plt.savefig("./5.Random Latent Vector(Autoencoder as Generator).png")
+    plt.savefig(dir_path + "/5.Random Latent Vector(Autoencoder as Generator).png")
     plt.show()
 
 print("##### Done #####")

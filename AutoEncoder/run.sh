@@ -1,1 +1,0 @@
-python3 Autoencoder.py --batch_size 128 --epochs 2 --latent_dims 10 --lr 1e-3 --num_workers 8 --use_gpu --pretrained
