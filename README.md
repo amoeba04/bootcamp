@@ -15,6 +15,8 @@ CUDA_VISIBLE_DEVICES=0 python main.py --batch_size 4 --epochs 2 --lr 2e-4 --samp
 ```
 CUDA_VISIBLE_DEVICES=0 python main.py --batch_size 1 --eval
 ```
+
+Download pre-trained weight: [Dropbox link](https://www.dropbox.com/scl/fi/4lbvos2n85clcye0qhx1l/checkpoint_latest.pth?rlkey=osbb73vc1phuv34wamixgfxby&dl=0)
 ### Stable Diffusion (Inference)
 
 ### Frechet Inception Distance (FID)

@@ -158,14 +158,14 @@ def evaluate(test_dataloader, G_AB, G_BA, device, args):
             # A domain 이미지로 B domain 이미지 생성 후 저장
             real_A = batch['A'].to(device)
             fake_B = G_AB(real_A)
-            os.makedirs(os.path.join(args.output_dir, "genB"), exist_ok=True)
-            save_image(fake_B, os.path.join(args.output_dir, "genB", f"fake_B_{i}.png"), normalize=True)
+            os.makedirs(os.path.join(args.output_dir, "fakeB"), exist_ok=True)
+            save_image(fake_B, os.path.join(args.output_dir, "fakeB", f"fake_B_{i}.png"), normalize=True)
             
             # B domain 이미지로 A domain 이미지 생성 후 저장
             real_B = batch['B'].to(device)
             fake_A = G_BA(real_B)
-            os.makedirs(os.path.join(args.output_dir, "genA"), exist_ok=True)
-            save_image(fake_A, os.path.join(args.output_dir, "genA", f"fake_A_{i}.png"), normalize=True)
+            os.makedirs(os.path.join(args.output_dir, "fakeA"), exist_ok=True)
+            save_image(fake_A, os.path.join(args.output_dir, "fakeA", f"fake_A_{i}.png"), normalize=True)
 
     
 def save_checkpoint(epoch, G_AB, G_BA, D_A, D_B, optimizer_G, optimizer_D_A, optimizer_D_B, args):

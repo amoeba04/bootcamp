@@ -1,7 +1,8 @@
 /fid.sh
 /*/__pycache__
 /CycleGAN/horse2zebra
-/CycleGAN/experiments*
+/CycleGAN/experiments_ori/checkpoint*
+/CycleGAN/experiments_ori/fake*
 /CycleGAN/CycleGAN.ipynb
 /CycleGAN/download.sh
 /CycleGAN/fid_med_score.py
