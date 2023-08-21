@@ -303,7 +303,7 @@ if __name__ == '__main__':
                         help='learning rate (default: 2e-4)')
     parser.add_argument('--decay_epoch', default=100, type=int, help='epoch to start lr decay')
 
-    parser.add_argument('--data_path', default='/raid/jaesin/horse2zebra', type=str, help='dataset path')
+    parser.add_argument('--data_path', default='./horse2zebra', type=str, help='dataset path')
     parser.add_argument('--output_dir', default='./experiments', help='path where to save, empty for no saving')
     parser.add_argument('--resume', action='store_true', help='Resume training from checkpoint')
     parser.add_argument('--eval', action='store_true', help='Perform evaluation only')

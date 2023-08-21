@@ -8,12 +8,12 @@
 ### CycleGAN (Training, Inference)
 학습
 ```
-CUDA_VISIBLE_DEVICES=0 python main.py --batch_size 4 --epochs 2 --lr 2e-4 --sample_interval 100 --data_path ./horse2zebra --output_dir ./experiments
+CUDA_VISIBLE_DEVICES=0 python main.py --batch_size 4 --epochs 2 --lr 2e-4 --sample_interval 100 --data_path ./horse2zebra --output_dir ./experiments_myname
 ```
 
 추론 (이미지 생성)
 ```
-CUDA_VISIBLE_DEVICES=0 python main.py --batch_size 1 --eval
+CUDA_VISIBLE_DEVICES=0 python main.py --batch_size 1 --eval --output_dir ./experiment_ori
 ```
 
 Download pre-trained weight: [Dropbox link](https://www.dropbox.com/scl/fi/4lbvos2n85clcye0qhx1l/checkpoint_latest.pth?rlkey=osbb73vc1phuv34wamixgfxby&dl=0)
