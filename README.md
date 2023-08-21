@@ -10,9 +10,13 @@
 ## 8/24(목) Practice
 ### Autoencoder (Training, Inference)
 - 학습 및 추론
+```
 CUDA_VISIBLE_DEVICES=0 python3 Autoencoder.py --batch_size 128 --epochs 5 --latent_dims 10 --lr 1e-3 --use_gpu
+```
 - 사전학습 모델 추론
+```
 CUDA_VISIBLE_DEVICES=0 python3 Autoencoder.py --batch_size 128 --epochs 5 --latent_dims 10 --lr 1e-3 --use_gpu --pretrained
+```
 
 ### CycleGAN (Training, Inference)
 - 학습
