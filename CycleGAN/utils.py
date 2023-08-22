@@ -1,3 +1,4 @@
+import os
 import random
 import torch
 import matplotlib.pyplot as plt
@@ -101,3 +102,28 @@ def weights_init_normal(m):
     elif classname.find("BatchNorm2d") != -1:
         torch.nn.init.normal_(m.weight.data, 1.0, 0.02)
         torch.nn.init.constant_(m.bias.data, 0.0)
+
+    
+def save_checkpoint(epoch, G_AB, G_BA, D_A, D_B, optimizer_G, optimizer_D_A, optimizer_D_B, args):
+    """
+    현재 epoch에서의 CycleGAN model, optimizer의 체크포인트를 저장하는 함수
+    Args:
+        G_AB: A domain 이미지를 B domain 이미지로 변환하는 generator
+        G_BA: B domain 이미지를 A domain 이미지로 변환하는 generator
+        D_A: A domain 이미지의 진짜/가짜 여부를 판별하는 discriminator
+        D_B: B domain 이미지의 진짜/가짜 여부를 판별하는 discriminator
+        optimizer_G, optimizer_D_A, optimizer_D_B: G, D 각각의 optimizer
+        args: 기타 입력 인수들 (output_dir 등)
+    """
+    state = {
+        'epoch': epoch,
+        'G_AB': G_AB.state_dict(),
+        'G_BA': G_BA.state_dict(),
+        'D_A': D_A.state_dict(),
+        'D_B': D_B.state_dict(),
+        'optimizer_G': optimizer_G.state_dict(),
+        'optimizer_D_A': optimizer_D_A.state_dict(),
+        'optimizer_D_B': optimizer_D_B.state_dict()
+    }
+    torch.save(state, os.path.join(args.output_dir, "checkpoint_latest.pth"))
+    print(f"Saved checkpoint for epoch {epoch}")
