@@ -34,7 +34,10 @@ Download pre-trained weight:
 [Dropbox link](https://www.dropbox.com/scl/fi/5z3ouo4wqgqdmew121hx5/checkpoint_latest.pth?rlkey=lmj57wahde84gdgfec2m9m8ct&dl=0) / 
 [Google Drive link](https://drive.google.com/file/d/1e0ojGThhunYNNT7CKiAguU2W8ySk8Zs1/view?usp=sharing)
 ### Stable Diffusion (Inference)
-- 학습 및 추론: ```StableDiffusion/std_inference.ipynb``` 내 실행
+- 추론: ```StableDiffusion/std_inference.ipynb``` 내 실행 혹은
+```
+CUDA_VISIBLE_DEVICES=0 python std_inference.py
+```
 
 ### Frechet Inception Distance (FID)
 - 계산

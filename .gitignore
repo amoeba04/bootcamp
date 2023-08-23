@@ -8,3 +8,7 @@
 /CycleGAN/fid_med_score.py
 /CycleGAN/outputs.png
 /CycleGAN/fid.sh
+/StableDiffusion/imagenet*
+/**/*.png
+/**/*ubyte*
+/**/*pth
