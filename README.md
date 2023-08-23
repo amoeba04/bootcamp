@@ -8,6 +8,15 @@
 
 - 강의자료: 공지 메일 참고
 
+- Environments
+```
+CUDA 11.8
+torch
+torchvision
+diffusers
+transformers
+```
+
 ## 8/24(목) Practice
 ### Autoencoder (Training, Inference)
 - 학습 및 추론
